@@ -1,0 +1,127 @@
+
+            <!--/main-->
+            <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+
+                <h1 id="section1">Administracao de Usuarios</h1>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success alert-dismissable" ng-show="alertaCadastro">
+                            <button type="button" class="close" ng-click="alertaCadastro = false;">×</button>
+                            <strong>{{ infoTitulo }}</strong>
+                            {{ infoMsg }}
+                        </div>
+                        <div class="alert alert-danger alert-dismissable" ng-show="erroCadastro">
+                            <button type="button" class="close" ng-click="erroCadastro = false;">×</button>
+                            <strong>{{ infoTitulo }}</strong>
+                            {{ infoMsg }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" ng-show="showFormUser">
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 ng-show="edit">Adicionar Usu&aacute;rio...</h4>
+                                <h4 ng-hide="edit">Alterar Usu&aacute;rio...</h4>
+                            </div>
+                            <div class="panel-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">ID:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" ng-model="id" ng-disabled="true" placeholder="...">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Usu&aacute;rio:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" ng-model="usuario" ng-disabled="!edit" placeholder="Usu&aacute;rio">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">E-mail:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" ng-model="email" placeholder="E-mail">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Senha:</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" ng-model="senha" placeholder="Senha">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Data Cria&ccedil;&atilde;o:</label>
+                                        <div class="col-sm-10">
+                                            <input type="datetime" ng-model="dataCriacao" ng-disabled="true" placeholder="...">
+                                        </div>
+                                    </div>
+                                </form>
+                                <hr>
+                                <div class="pull-right">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <button class="btn btn-success" ng-disabled="error || incomplete"  ng-click="saveUser()">
+                                                <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+                                            </button>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button class="btn btn-success" ng-click="editUser('cancel')">
+                                                <span class="glyphicon glyphicon-eject"></span> Cancelar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!--/panel-body-->
+                        </div><!--/panel-->
+                    </div><!--/col-->
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6"><h4>Listagem de usuarios</h4> </div>
+                            <div class="col-xs-6, text-right">
+                                <button class="btn btn-success" ng-click="editUser('new')" style="margin-right: 5px;" title="Adicionar">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Usu&aacute;rio</th>
+                            <th>E-mail</th>
+                            <th>Senha</th>
+                            <th>Data Cria&ccedil;&atilde;o</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in usuarios">
+                            <td>
+                                <button class="btn btn-primary" ng-click="editUser($index);" title="Alterar">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" ng-click="deleteUser(x.id);" title="Remover">
+                                    <span class="glyphicon glyphicon-remove" ></span>
+                                </button>
+                            </td>
+                            <td>{{ x.id}}</td>
+                            <td>{{ x.usuario }}</td>
+                            <td>{{ x.email }}</td>
+                            <td>{{ x.senha }}</td>
+                            <td>{{ x.dataCriacao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!--/panel-->
+
+            </div><!--/.row-->

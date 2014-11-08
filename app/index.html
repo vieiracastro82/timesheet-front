@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="app.js"></script>
+</head>
+
+<body>
+
+<div class="page-container">
+
+  <!-- top navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">TIMESHEET</a>
+    </div>
+  </nav>
+
+<div ng-app="myApp" ng-controller="customersController">
+
+  <div class="container">
+
+    <h3>Usu&aacute;rio</h3>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Editar</th>
+        <th>ID</th>
+        <th>Usu&aacute;rio</th>
+        <th>E-mail</th>
+        <th>Senha</th>
+        <th>Data Cria&ccedil;&atilde;o</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="x in usuarios">
+        <td>
+          <button class="btn" ng-click="editUser(x.id);">
+            <span class="glyphicon glyphicon-pencil"></span> Edit </button>
+        </td>
+        <td>{{ x.id }}</td>
+        <td>{{ x.usuario }}</td>
+        <td>{{ x.email }}</td>
+        <td>{{ x.senha }}</td>
+        <td>{{ x.dataCriacao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <hr>
+    <button class="btn btn-success" ng-click="editUser('new')">
+      <span class="glyphicon glyphicon-user"></span> Adicionar Usu&aacute;rio
+    </button>
+    <hr>
+
+    <h3 ng-show="edit">Adicionar Usu&aacute;rio:</h3>
+    <h3 ng-hide="edit">Alterar Usu&aacute;rio:</h3>
+
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">ID:</label>
+        <div class="col-sm-10">
+          <input type="text" ng-model="id" ng-disabled="true" placeholder="...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Usu&aacute;rio:</label>
+        <div class="col-sm-10">
+          <input type="text" ng-model="usuario" ng-disabled="!edit" placeholder="Usu&aacute;rio">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">E-mail:</label>
+        <div class="col-sm-10">
+          <input type="text" ng-model="email" ng-disabled="!edit" placeholder="E-mail">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Senha:</label>
+        <div class="col-sm-10">
+          <input type="password" ng-model="senha" placeholder="Senha">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Data Cria&ccedil;&atilde;o:</label>
+        <div class="col-sm-10">
+          <input type="datetime" ng-model="dataCriacao" ng-disabled="true" placeholder="...">
+        </div>
+      </div>
+    </form>
+
+    <hr>
+    <button class="btn btn-success" ng-disabled="error || incomplete"  ng-click="saveUser()">
+      <span class="glyphicon glyphicon-floppy-disk"></span> Save Changes
+    </button>
+    <button class="btn btn-success" ng-click="editUser('cancel')">
+      <span class="glyphicon glyphicon-eject"></span> Cancelar
+    </button>
+
+  </div>
+
+
+</div>
+
+</div>
+
+<script src= "myUsers.js"></script>
+
+</body>
+</html>

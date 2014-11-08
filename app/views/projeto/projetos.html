@@ -1,0 +1,105 @@
+
+<!--/main-->
+<div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+
+    <h1 id="section1">Administracao de Projetos</h1>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-6"><h4>Listagem de projetos</h4></div>
+                <div class="col-xs-6, text-right">
+                    <button class="btn btn-success" ng-click="editUser('new')" style="margin-right: 5px;" title="Adicionar">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>ID</th>
+                <th>Projeto</th>
+                <th>Referência Externa</th>
+                <th>Data Cria&ccedil;&atilde;o</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="x in projetos">
+                <td>
+                    <button class="btn btn-primary" ng-click="editUser(x.id);" title="Alterar">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" ng-click="editUser(x.id);" title="Remover">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+                <td>{{ x.id }}</td>
+                <td>{{ x.projeto }}</td>
+                <td>{{ x.idReferenciaExterna }}</td>
+                <td>{{ x.dataCriacao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div><!--/panel-->
+
+    <div class="row" ng-show="showFormUser">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 ng-show="edit">Adicionar Projeto...</h4>
+                    <h4 ng-hide="edit">Alterar Projeto...</h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ID:</label>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="id" ng-disabled="true" placeholder="...">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Projeto:</label>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="projeto" ng-disabled="!edit" placeholder="Projeto">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Referencia Externa:</label>
+                            <div class="col-sm-10">
+                                <input type="text" ng-model="idReferenciaExterna" ng-disabled="!edit" placeholder="Referencia Externa">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Data Cria&ccedil;&atilde;o:</label>
+                            <div class="col-sm-10">
+                                <input type="datetime" ng-model="dataCriacao" ng-disabled="true" placeholder="...">
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    <div class="pull-right">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <button class="btn btn-success" ng-disabled="error || incomplete"  ng-click="saveUser()">
+                                    <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+                                </button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button class="btn btn-success" ng-click="editUser('cancel')">
+                                    <span class="glyphicon glyphicon-eject"></span> Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div><!--/col-->
+    </div>
+
+
+</div><!--/.row-->

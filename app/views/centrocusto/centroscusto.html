@@ -2,7 +2,7 @@
 <!--/main-->
 <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
 
-    <h1 id="section1">Administracao de Projetos</h1>
+    <h1 id="section1">Administracao de Centros de Custo</h1>
 
     <div class="row">
         <div class="col-xs-12">
@@ -23,8 +23,8 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col-xs-12">
-                    <h4 ng-show="edit">Adicionar Projeto...</h4>
-                    <h4 ng-hide="edit">Alterar Projeto...</h4>
+                    <h4 ng-show="edit">Adicionar Centro de Custo...</h4>
+                    <h4 ng-hide="edit">Alterar Centro de Custo...</h4>
                 </div>
             </div>
         </div>
@@ -37,20 +37,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label">Projeto:</label>
+                    <label class="col-xs-3 control-label">Centro de custo:</label>
                     <div class="col-xs-9">
-                        <input type="text" ng-model="projeto" name="projeto" placeholder="Projeto" required>
-                        <span class="text-danger" ng-show="formCadastro.projeto.$dirty || formCadastro.projeto.$invalid">
-                            <span ng-show="formCadastro.projeto.$error.required">Requerido!</span>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Situacao:</label>
-                    <div class="col-xs-9">
-                        <input type="text" ng-model="situacao" name="situacao" placeholder="Situacao" required>
-                        <span class="text-danger" ng-show="formCadastro.situacao.$dirty || formCadastro.situacao.$invalid">
-                            <span ng-show="formCadastro.situacao.$error.required">Requerido!</span>
+                        <input type="text" ng-model="centroCusto" name="centroCusto" placeholder="Centro de custo" required>
+                        <span class="text-danger" ng-show="formCadastro.centroCusto.$dirty || formCadastro.centroCusto.$invalid">
+                            <span ng-show="formCadastro.centroCusto.$error.required">Requerido!</span>
                         </span>
                     </div>
                 </div>
@@ -58,21 +49,6 @@
                     <label class="col-xs-3 control-label">ID externo:</label>
                     <div class="col-xs-9">
                         <input type="number" ng-model="idReferenciaExterna" name="idReferenciaExterna" placeholder="ID Externo">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">% Desvio esforco:</label>
-                    <div class="col-xs-9">
-                        <input type="number" ng-model="percentualAdicionalDesvioHora" name="percentualAdicionalDesvioHora" placeholder="% Desvio esforco">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">Usar padrao sistema</label>
-                    <div class="col-xs-9">
-                        <div class="radio">
-                            <label><input type="radio" name="usarDesvioHoraPadrao" value="true" ng-model="usarDesvioHoraPadrao">Sim</label>
-                            <label><input type="radio" name="usarDesvioHoraPadrao" value="false" ng-model="usarDesvioHoraPadrao">Nao</label>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,7 +63,7 @@
 
             <div class="row">
                 <div class="col-xs-4 text-right">
-                    <button class="btn btn-success" ng-disabled="formCadastro.projeto.$invalid || formCadastro.situacao.$invalid|| formCadastro.idReferenciaExterna.$invalid"  ng-click="salvarForm()">
+                    <button class="btn btn-success" ng-disabled="formCadastro.centroCusto.$invalid"  ng-click="salvarForm()">
                         <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
                     </button>
                 </div>
@@ -105,7 +81,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-xs-8"><h4>Listagem de projetos</h4> </div>
+                <div class="col-xs-8"><h4>Listagem de centros de custo</h4> </div>
                 <div class="col-xs-4, text-right">
                     <button class="btn btn-success" ng-click="abrirForm('new')" style="margin-right: 5px;" title="Adicionar">
                         <span class="glyphicon glyphicon-plus"></span>
@@ -119,14 +95,13 @@
                 <th></th>
                 <th></th>
                 <th>ID</th>
-                <th>Projeto</th>
-                <th>Situacao</th>
+                <th>Centro Custo</th>
                 <th>ID Externo</th>
                 <th>Data Cria&ccedil;&atilde;o</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="x in projetos">
+            <tr ng-repeat="x in centrosCusto">
                 <td>
                     <button class="btn btn-primary" ng-click="abrirForm($index);" title="Alterar">
                         <span class="glyphicon glyphicon-edit"></span>
@@ -138,8 +113,7 @@
                     </button>
                 </td>
                 <td>{{ x.id}}</td>
-                <td>{{ x.projeto }}</td>
-                <td>{{ x.situacao }}</td>
+                <td>{{ x.centroCusto }}</td>
                 <td>{{ x.idReferenciaExterna }}</td>
                 <td>{{ x.dataCriacao | date:'dd/MM/yyyy HH:mm:ss' }}</td>
             </tr>

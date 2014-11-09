@@ -1,0 +1,166 @@
+
+<!--/main-->
+<div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+
+    <h1 id="section1">Administracao de Atividades</h1>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="alert alert-success alert-dismissable" ng-show="alertaCadastro">
+                <button type="button" class="close" ng-click="alertaCadastro = false;">×</button>
+                <strong>{{ infoTitulo }}</strong>
+                {{ infoMsg }}
+            </div>
+            <div class="alert alert-danger alert-dismissable" ng-show="erroCadastro">
+                <button type="button" class="close" ng-click="erroCadastro = false;">×</button>
+                <strong>{{ infoTitulo }}</strong>
+                {{ infoMsg }}
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info" ng-show="infoCadastro">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-8">
+                    <h4 ng-show="edit">Atividade</h4>
+                </div>
+                <div class="col-xs-4, text-right">
+                    <button class="close" ng-click="infoCadastro = false;" style="margin-right: 5px;" title="Fechar">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" style="overflow: auto; max-height: 150px;">
+            <div class="row">
+                <div class="col-xs-2 text-right">Atividade:</div>
+                <div class="col-xs-10">{{ atividade }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">Projeto:</div>
+                <div class="col-xs-4">{{ projeto }}</div>
+                <div class="col-xs-2 text-right">Solicit:</div>
+                <div class="col-xs-4">{{ solicitante }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">Previsao:</div>
+                <div class="col-xs-4">{{ dataPrevista | date:'dd/MM/yy' }}</div>
+                <div class="col-xs-2 text-right">Esforço:</div>
+                <div class="col-xs-4">{{ esforcoPrevisto }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">Situacao:</div>
+                <div class="col-xs-4">{{ situacaoAtividade }}</div>
+                <div class="col-xs-2 text-right">Tipo:</div>
+                <div class="col-xs-4">{{ tipoAtividade }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">Descricao:</div>
+                <div class="col-xs-10">
+                    {{ descricao }}
+                </div>
+            </div>
+        </div><!--/panel-body-->
+    </div><!--/panel-->
+
+
+    <div class="panel panel-default" ng-show="showFormCadastro">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4 ng-show="edit">Adicionar Atividade...</h4>
+                    <h4 ng-hide="edit">Alterar Atividade...</h4>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="formCadastro">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">ID:</label>
+                    <div class="col-xs-9">
+                        <input type="text" ng-model="id" ng-disabled="true" placeholder="...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Atividade:</label>
+                    <div class="col-xs-9">
+                        <input type="text" ng-model="atividade" name="atividade" placeholder="Atividade" required>
+                        <span class="text-danger" ng-show="formCadastro.atividade.$dirty || formCadastro.atividade.$invalid">
+                            <span ng-show="formCadastro.atividade.$error.required">Requerido!</span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-xs-4 text-right">
+                    <button class="btn btn-success" ng-disabled="formCadastro.atividade.$invalid"  ng-click="salvarForm()">
+                        <span class="glyphicon glyphicon-floppy-disk"></span> Salvar
+                    </button>
+                </div>
+                <div class="col-xs-8">
+                    <button class="btn btn-success" ng-click="abrirForm('cancel')">
+                        <span class="glyphicon glyphicon-eject"></span> Cancelar
+                    </button>
+                </div>
+            </div>
+
+        </div><!--/panel-body-->
+    </div><!--/panel-->
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-8"><h4>Listagem de atividades</h4> </div>
+                <div class="col-xs-4, text-right">
+                    <button class="btn btn-success" ng-click="abrirForm('new')" style="margin-right: 5px;" title="Adicionar">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>ID</th>
+                <th>Atividade</th>
+                <th>Projeto</th>
+                <th>Previsao</th>
+                <th>Situacao</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="x in atividades">
+                <td>
+                    <button class="btn btn-primary" ng-click="abrirForm($index);" title="Alterar">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" ng-click="removerRegistro(x.id);" title="Remover">
+                        <span class="glyphicon glyphicon-remove" ></span>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" ng-click="exibirRegistro($index);" title="Detalhes">
+                        <span class="glyphicon glyphicon-info-sign" ></span>
+                    </button>
+                </td>
+                <td>{{ x.id}}</td>
+                <td>{{ x.atividade }}</td>
+                <td>{{ x.projeto.projeto }}</td>
+                <td>{{ x.dataPrevista | date:'dd/MM/yy' }}</td>
+                <td><label class="label label-warning">{{ x.situacaoAtividade.situacaoAtividade }}</label></td>
+            </tr>
+            </tbody>
+        </table>
+    </div><!--/panel-->
+
+</div><!--/.row-->

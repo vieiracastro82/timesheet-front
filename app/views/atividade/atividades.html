@@ -91,6 +91,58 @@
                         </span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Solicit:</label>
+                    <div class="col-xs-9">
+                        <input type="text" ng-model="solicitante" name="solicitante" placeholder="Solicitante">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Projeto:</label>
+                    <div class="col-xs-9">
+                        <!--TODO Trocar campo para tipo autocomplete e permitir em tempo de execução adicionar -->
+                        <select ng-model="projeto" ng-options="x.projeto for x in dataSource.projetos"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Situacao:</label>
+                    <div class="col-xs-9">
+                        <!--TODO Trocar campo para tipo autocomplete e permitir em tempo de execução adicionar -->
+                        <select ng-model="situacaoAtividade" ng-options="x.situacaoAtividade for x in dataSource.situacaoAtividades"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Tipo:</label>
+                    <div class="col-xs-9">
+                        <!--TODO Trocar campo para tipo autocomplete e permitir em tempo de execução adicionar -->
+                        <select ng-model="tipoAtividade" ng-options="x.tipoAtividade for x in dataSource.tipoAtividades"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">ID externo:</label>
+                    <div class="col-xs-9">
+                        <input type="number" ng-model="idReferenciaExterna" name="idReferenciaExterna" placeholder="ID Externo">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Previsão:</label>
+                    <div class="col-xs-9">
+                        <!--TODO Trocar campo para tipo datepicker -->
+                        <input type="date" ng-model="dataPrevista" name="dataPrevista" style="line-height: inherit;" placeholder="dd/mm/yyyy">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Esforco:</label>
+                    <div class="col-xs-9">
+                        <input type="number" ng-model="esforcoPrevisto" name="esforcoPrevisto" placeholder="Quantidade horas">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Descricao:</label>
+                    <div class="col-xs-9">
+                        <textarea ng-model="descricao" name="descricao" placeholder="Coloque aqui informacoes detalhadas sobre a atividade"></textarea>
+                    </div>
+                </div>
             </form>
 
             <hr>
@@ -157,6 +209,7 @@
                 <td>{{ x.atividade }}</td>
                 <td>{{ x.projeto.projeto }}</td>
                 <td>{{ x.dataPrevista | date:'dd/MM/yy' }}</td>
+                <!--@TODO Implementar busca do banco de dados de bgcolor e fontcolor-->
                 <td><label class="label label-warning">{{ x.situacaoAtividade.situacaoAtividade }}</label></td>
             </tr>
             </tbody>

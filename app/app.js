@@ -1,5 +1,6 @@
 var myApp = angular.module('myApp',[
-    'ngRoute'
+  'ngRoute',
+  'ngInputDate'
 ]);
 
 myApp.config(['$routeProvider', function($routeProvider) {
@@ -391,13 +392,17 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
   $scope.alertaCadastro = false;
   $scope.erroCadastro = false;
   $scope.infoCadastro = false;
+  $scope.dataSource = [];
 
+
+  //INI - Exibi informações completas do registro
   $scope.exibirRegistro = function(id) {
 
     $scope.infoCadastro = true;
     $scope.showFormCadastro = false;
 
     $scope.atividade = $scope.atividades[id].atividade;
+    $scope.idReferenciaExterna = $scope.atividades[id].idReferenciaExterna;
     $scope.projeto = $scope.atividades[id].projeto.projeto;
     $scope.situacaoAtividade = $scope.atividades[id].situacaoAtividade.situacaoAtividade;
     $scope.tipoAtividade = $scope.atividades[id].tipoAtividade.tipoAtividade;
@@ -407,7 +412,9 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
     $scope.descricao = $scope.atividades[id].descricao;
 
   }
+  //END - Exibi informações completas do registro
 
+  //INI - Abri form para manipular cadastro
   $scope.abrirForm = function(id) {
 
     $scope.erroCadastro = false;
@@ -420,25 +427,54 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
       $scope.id = '';
       $scope.atividade = '';
       $scope.idReferenciaExterna = '';
-      $scope.dataCriacao = '';
+      $scope.projeto = '';
+      $scope.situacaoAtividade = '';
+      $scope.tipoAtividade = '';
+      $scope.dataPrevista = '';
+      $scope.esforcoPrevisto = '';
+      $scope.solicitante = '';
+      $scope.descricao = '';
     } else if(id == 'cancel') {
       $scope.showFormCadastro = false;
       $scope.edit = true;
       $scope.id = '';
       $scope.atividade = '';
       $scope.idReferenciaExterna = '';
-      $scope.dataCriacao = '';
     } else {
       $scope.showFormCadastro = true;
       $scope.edit = false;
       $scope.id = $scope.atividades[id].id;
       $scope.atividade = $scope.atividades[id].atividade;
       $scope.idReferenciaExterna = $scope.atividades[id].idReferenciaExterna;
-      $scope.dataCriacao = $filter('date')($scope.atividades[id].dataCriacao, 'dd/MM/yyyy HH:mm:ss')
+
+      for(var key  in $scope.dataSource.projetos) {
+        if($scope.atividades[id].projeto.id == $scope.dataSource.projetos[key].id) {
+          $scope.projeto = $scope.dataSource.projetos[key];
+        }
+      }
+
+      for(var key  in $scope.dataSource.situacaoAtividades) {
+        if($scope.atividades[id].situacaoAtividade.id == $scope.dataSource.situacaoAtividades[key].id) {
+          $scope.situacaoAtividade = $scope.dataSource.situacaoAtividades[key];
+        }
+      }
+
+      for(var key  in $scope.dataSource.tipoAtividades) {
+        if($scope.atividades[id].tipoAtividade.id == $scope.dataSource.tipoAtividades[key].id) {
+          $scope.tipoAtividade = $scope.dataSource.tipoAtividades[key];
+        }
+      }
+
+      $scope.dataPrevista =  $scope.atividades[id].dataPrevista;
+      $scope.esforcoPrevisto = $scope.atividades[id].esforcoPrevisto / 60;
+      $scope.solicitante = $scope.atividades[id].solicitante;
+      $scope.descricao = $scope.atividades[id].descricao;
 
     }
   };
+  //END - Abri form para manipular cadastro
 
+  //INI - Processa as mudanças no formulario
   $scope.salvarForm = function() {
 
     $scope.erroCadastro = false;
@@ -446,10 +482,17 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
 
     var dataObj = {
       atividade : $scope.atividade,
-      situacao : $scope.situacao,
       idReferenciaExterna : $scope.idReferenciaExterna,
-      dataCriacao: new Date()
+      dataCriacao : new Date(),
+      projeto : $scope.projeto,
+      situacaoAtividade : $scope.situacaoAtividade,
+      tipoAtividade : $scope.tipoAtividade,
+      dataPrevista : $scope.dataPrevista,
+      descricao : $scope.descricao,
+      esforcoPrevisto : ($scope.esforcoPrevisto * 60)
     };
+
+    console.log(dataObj);
 
     if($scope.id != '') {
       dataObj.id = $scope.id;
@@ -475,11 +518,15 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
     });
 
   }
+  //END - Processa as mudanças no formulario
 
+  //INI - Realiza a exclusão do registro
   $scope.removerRegistro = function(id) {
 
     $scope.erroCadastro = false;
     $scope.alertaCadastro = false;
+    $scope.infoCadastro = false;
+
     var dataObj = {
       data: id,
       headers: {'Content-Type': 'application/json'}
@@ -505,6 +552,32 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
     });
 
   }
+  //END - Realiza a exclusão do registro
+
+  //INI - Carregando lista de projetos
+  var url_servico_projeto = 'http://localhost:8080/service/projeto';
+
+  $http.get(url_servico_projeto)
+      .success(function(response) {$scope.dataSource.projetos = response;});
+  //END - Carregando lista de projetos
+
+  //INI - Carregando lista de situacao atividades
+  var url_servico_situacaoAtividade = 'http://localhost:8080/service/situacaoatividade';
+
+  $http.get(url_servico_situacaoAtividade)
+      .success(function(response) {$scope.dataSource.situacaoAtividades = response;});
+  //END - Carregando lista de situacao atividades
+
+  //INI - Carregando lista de tipo atividades
+  var url_servico_tipoAtividade = 'http://localhost:8080/service/tipoatividade';
+
+  $http.get(url_servico_tipoAtividade)
+      .success(function(response) {$scope.dataSource.tipoAtividades = response;});
+  //END - Carregando lista de tipo atividades
+
 
 }])
 /* END: Controller de Atividades */
+
+
+

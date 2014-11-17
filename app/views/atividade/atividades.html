@@ -47,13 +47,19 @@
                 <div class="col-xs-2 text-right">Previsao:</div>
                 <div class="col-xs-4">{{ dataPrevista | date:'dd/MM/yy' }}</div>
                 <div class="col-xs-2 text-right">Esforço:</div>
-                <div class="col-xs-4">{{ esforcoPrevisto }}</div>
+                <div class="col-xs-4">{{ esforcoPrevisto/60 }}h</div>
             </div>
             <div class="row">
                 <div class="col-xs-2 text-right">Situacao:</div>
                 <div class="col-xs-4">{{ situacaoAtividade }}</div>
                 <div class="col-xs-2 text-right">Tipo:</div>
                 <div class="col-xs-4">{{ tipoAtividade }}</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 text-right">Respons:</div>
+                <div class="col-xs-10">
+                    <span ng-repeat="x in responsavelAtividade " class="label label-info" style="margin-right: 2px;">{{ x.usuario.usuario }} - {{ x.esforcoIndividualPrevisto/60 }}h</span>
+                </div>
             </div>
             <div class="row">
                 <div class="col-xs-2 text-right">Descricao:</div>

@@ -286,21 +286,21 @@ myApp.controller('contCentrosCusto',['$scope','$http','$filter',function ($scope
       $scope.showFormCadastro = true;
       $scope.edit = true;
       $scope.id = '';
-      $scope.atividade = '';
+      $scope.centroCusto = '';
       $scope.idReferenciaExterna = '';
       $scope.dataCriacao = '';
     } else if(id == 'cancel') {
       $scope.showFormCadastro = false;
       $scope.edit = true;
       $scope.id = '';
-      $scope.atividade = '';
+      $scope.centroCusto = '';
       $scope.idReferenciaExterna = '';
       $scope.dataCriacao = '';
     } else {
       $scope.showFormCadastro = true;
       $scope.edit = false;
       $scope.id = $scope.centrosCusto[id].id;
-      $scope.atividade = $scope.centrosCusto[id].atividade;
+      $scope.centroCusto = $scope.centrosCusto[id].centroCusto;
       $scope.idReferenciaExterna = $scope.centrosCusto[id].idReferenciaExterna;
       $scope.dataCriacao = $filter('date')($scope.centrosCusto[id].dataCriacao, 'dd/MM/yyyy HH:mm:ss')
 
@@ -313,8 +313,7 @@ myApp.controller('contCentrosCusto',['$scope','$http','$filter',function ($scope
     $scope.alertaCadastro = false;
 
     var dataObj = {
-      atividade : $scope.atividade,
-      situacao : $scope.situacao,
+      centroCusto : $scope.centroCusto,
       idReferenciaExterna : $scope.idReferenciaExterna,
       dataCriacao: new Date()
     };
@@ -398,6 +397,8 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
   //INI - Exibi informações completas do registro
   $scope.exibirRegistro = function(id) {
 
+    console.log($scope.atividades[id].responsavelAtividade);
+
     $scope.infoCadastro = true;
     $scope.showFormCadastro = false;
 
@@ -410,6 +411,7 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
     $scope.esforcoPrevisto = $scope.atividades[id].esforcoPrevisto;
     $scope.solicitante = $scope.atividades[id].solicitante;
     $scope.descricao = $scope.atividades[id].descricao;
+    $scope.responsavelAtividade = $scope.atividades[id].responsavelAtividade;
 
   }
   //END - Exibi informações completas do registro
@@ -483,7 +485,6 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
     var dataObj = {
       atividade : $scope.atividade,
       idReferenciaExterna : $scope.idReferenciaExterna,
-      dataCriacao : new Date(),
       projeto : $scope.projeto,
       situacaoAtividade : $scope.situacaoAtividade,
       tipoAtividade : $scope.tipoAtividade,
@@ -578,6 +579,7 @@ myApp.controller('contAtividades',['$scope','$http','$filter',function ($scope,$
 
 }])
 /* END: Controller de Atividades */
+
 
 
 
